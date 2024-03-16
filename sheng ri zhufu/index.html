@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生日祝福页</title>
+<style>
+body, html {
+height: 100%;
+margin: 0;
+font-family: Arial, sans-serif;
+}
+
+.bg {
+background-image: url('happy birthday.png');
+background-size: cover;
+background-position: center;
+height: 100%;
+}
+
+.center-div {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+text-align: center;
+color: hwb(99 1% 91%);
+}
+
+
+.welcome-text {
+  font-family: 'SimSun'; 
+  font-size: 38px; /* 字体大小 */
+  font-weight: 900; /* 字体粗细 */
+  color: hsl(0, 38%, 5%); /* 字体颜色 */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* 其他的样式属性，例如文本阴影、字母间距等 */
+}
+
+.button {
+font-size: 24px;
+padding: 20px 40px;
+cursor: pointer;
+background-color: rgb(252, 111, 205);
+color: white;
+border: none;
+border-radius: 50px;
+}
+
+.countdown {
+font-size: 36px;
+margin-top: 20px;
+}
+
+.current-date {
+font-size: 24px;
+margin-top: 10px;
+}
+
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+</style>
+</head>
+<body>
+
+<div class="bg">
+<div class="center-div">
+<h1 class="welcome-text">欢迎来到张欣怡的生日祝福页！</h1>
+<button class="button" onclick="startCountdown()">开始生日祝福体验</button>
+<div id="countdown" class="countdown"></div>
+<div id="currentDate" class="current-date"></div>
+</div>
+</div>
+
+<div class="footer">
+<a href="secondpage.html">照片墙</a> 
+<a href="fourth.html">粒子动效</a> 
+<a href="third.html">留言板</a>
+</div>
+
+<script>
+
+ 
+
+
+
+// 初始化当前日期的时间戳
+currentDate = new Date().getTime() - 1;
+var countdownDate = new Date('March 18, 2023 :00:00').getTime();
+var intervalId;
+var isCountdownStarted = false;
+
+// 开始计时
+function startCountdown() {
+  const countdownElement = document.getElementById('countdown');
+  const currentDateElement = document.getElementById('currentDate');
+  intervalId = setInterval(() => {
+    const now = new Date().getTime();
+    const timeleft = countdownDate - now;
+    const milliseconds = timeleft % 100;
+    const seconds = Math.floor(milliseconds / 1000);
+    const minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60)); // 修正计算方法
+    const hours = Math.floor((milliseconds % (100 * 60)) / (10 * 100));
+    countdownElement.innerHTML = hours + "h " + minutes + "m " + seconds + "s";
+    currentDateElement.innerHTML = "当前日期：" + new Date(now).toLocaleDateString();
+
+    if (now >= countdownDate) {
+      clearInterval(intervalId);
+      document.getElementById('countdown').innerHTML = "生日快乐！";
+    }
+  }, 1000);
+}
+
+// 等待页面加载完成后绑定按钮事件
+window.onload = function() {
+  var button = document.querySelector('.button');
+  button.addEventListener('click', function() {
+    if (!isCountdownStarted) {
+      startCountdown();
+      isCountdownStarted = true;
+    }
+  });
+};
+
+
+
+
+</script>
+
+</body>
+</html>

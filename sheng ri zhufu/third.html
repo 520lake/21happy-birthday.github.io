@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>留言板</title>
+<style>
+  body {
+    background-image: linear-gradient(to right, #ff69b4, #87ceeb); /* 线性渐变背景 */
+    background-color: #ffffff;
+    font-family: 'Arial', sans-serif;
+  }
+  .container {
+    display: flex;
+    justify-content: top;
+    align-items: center;
+    height: 200vh;
+    flex-direction: column;
+  }
+
+  .message-box {
+    background-image: url(yinghua.jpg);
+    width: 30%;
+    height: 30%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column; /* 垂直布局 */
+    align-items: center; /* 垂直居中 */
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+  }
+
+  .title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    bottom: 20px;
+  }
+  .input-box {
+    display: flex;
+    flex-direction: column; /* 修改为column */
+    margin-bottom: 20px;
+  }
+  .user-name {
+    flex: 0 0 20%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px; /* 添加下边距 */
+  }
+  .message-content {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 50px;
+    margin-bottom: 10px;
+  }
+  .submit-button {
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: large;
+    padding: 10px 20px;
+    cursor: pointer;
+    align-self: flex-end; /* 将按钮自身靠右对齐 */
+    margin-top: 20px;
+  }
+
+  .photo {
+            width: 150px;
+            height: 150px;
+            right: 45%;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer; 
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            vertical-align: middle; /* 确保图片在垂直方向上居中 */
+        }
+        
+        
+  .bubble {
+  position: absolute;
+  background-image: linear-gradient(to right, orange, pink); /* 线性渐变背景 */
+  background-color: #000;
+  color: black;
+  font-size: 20px;
+  border-radius: 30px;
+  padding: 10px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 10px solid #ffffff;
+}
+
+
+  .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+</style>
+</head>
+<body>
+<div class="container">
+  <div>
+    <audio id="music-player" controls>
+      <source src="bei jia.mp3" type="audio/mpeg">
+    </audio> 
+  </div>      
+  <div class="message-box">
+    <div class="title">留言板</div>
+    <div class="input-box">
+      <input type="text" id="user-name" class="user-name" placeholder="你的大名" required />
+      <textarea id="message-content" class="message-content" placeholder="想发泄的话" required></textarea>
+    </div>
+    <button class="submit-button" onclick="postMessage()">留言</button>
+  </div>
+  
+  <div class="photo">
+    <img src="9.jpeg" alt="Photo 9">
+  </div>
+<div class="footer">
+  <a href="index.html">生日祝福页面</a> 
+  <a href="secondpage.html">照片墙</a>
+  <a href="fourth.html">粒子动效</a> 
+</div>
+
+<script>
+
+function postMessage() {
+  var userName = document.getElementById('user-name').value;
+  var messageContent = document.getElementById('message-content').value;
+
+  // 创建弹幕元素
+   bubble = document.createElement('div');
+  bubble.classList.add('bubble');
+  bubble.textContent = userName + ': ' + messageContent;
+
+  // 设置弹幕初始位置
+  bubble.style.top = Math.random() * 50 + '%';
+  bubble.style.left = Math.random() * 100 + '%';
+
+  // 将弹幕添加到 DOM
+  document.body.appendChild(bubble);
+
+  // 实现弹幕动态弹出效果
+  setTimeout(function() {
+    bubble.style.opacity = 1; // 使弹幕可见
+  }, 100);
+
+  // 设置弹幕在一段时间后消失
+  setTimeout(function() {
+    bubble.style.opacity = 0;
+    // 弹幕动画完成后移除弹幕
+    setTimeout(function() {
+      bubble.remove();
+    }, 1000);
+  }, 5000); // 弹幕保持可见的时间为5秒
+
+  // 清空输入框
+  document.getElementById('user-name').value = '';
+  document.getElementById('message-content').value = '';
+}
+
+
+
+</script>
+</body>
+</html>
